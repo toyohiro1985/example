@@ -12,9 +12,9 @@ public enum ProjectType implements CodeEnum {
     MAINTENANCE("maintenance", "保守PJ");
 
     /** プロジェクト種類のラベル */
-    private String label;
+    private final String label;
     /** プロジェクト種類のコード */
-    private String code;
+    private final String code;
 
     /**
      * コンストラクタ。

@@ -14,6 +14,7 @@ import nablarch.core.validation.ee.SystemChar;
  *
  * @author Nabu Rakutaro
  */
+@SuppressWarnings("all")
 public class RestExampleDomain {
     /** ID */
     @NumberRange(min = 0)
@@ -22,7 +23,7 @@ public class RestExampleDomain {
 
     /** プロジェクト名 */
     @Length(max = 64)
-    @SystemChar(charsetDef = "全角文字", allowLineSeparator = false)
+    @SystemChar(charsetDef = "全角文字")
     private String projectName;
 
     /** 新規開発PJ、または保守PJを表すコード値 */
@@ -34,12 +35,12 @@ public class RestExampleDomain {
     private String projectClass;
 
     /** 日付 */
-    @YYYYMMDD(allowFormat = "yyyyMMdd")
+    @YYYYMMDD
     private String date;
 
     /** ユーザ氏名（漢字） */
     @Length(max = 64)
-    @SystemChar(charsetDef = "全角文字", allowLineSeparator = false)
+    @SystemChar(charsetDef = "全角文字")
     private String userName;
 
     /** 備考 */

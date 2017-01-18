@@ -24,18 +24,20 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * @author Nabu Rakutaro
  */
 @Documented
-@Constraint(validatedBy = { CodeValue.CodeValueValidator.class })
+@Constraint(validatedBy = CodeValue.CodeValueValidator.class)
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
 @Retention(RUNTIME)
 public @interface CodeValue {
 
     /**
      * バリデーションエラー発生時に設定するメッセージ。
+     * @return デフォルトのエラーメッセージ
      */
     String message() default "{com.nablarch.example.app.entity.core.validation.validator.CodeValue.message}";
 
     /**
      * コードenumを取得する。
+     * @return コードが定義されているenum
      */
     Class<? extends Enum<?>> enumClass();
 
@@ -44,24 +46,28 @@ public @interface CodeValue {
      *
      * @author Nabu Rakutaro
      */
+    @SuppressWarnings("PublicInnerClass")
     @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
     @Retention(RUNTIME)
     @Documented
-    public @interface List {
+    @interface List {
 
         /**
          * CodeValueの配列を取得する。
+         * @return {@link CodeValue}の配列
          */
         CodeValue[] value();
     }
 
     /**
      * グループを取得する。
+     * @return グループ
      */
     Class<?>[] groups() default { };
 
     /**
      * Payloadを取得する。
+     * @return Payload
      */
     Class<? extends Payload>[] payload() default { };
 
@@ -70,6 +76,7 @@ public @interface CodeValue {
      *
      * @author Nabu Rakutaro
      */
+    @SuppressWarnings("PublicInnerClass")
     class CodeValueValidator implements ConstraintValidator<CodeValue, String> {
 
         /** コードを定義したEnumの配列 */

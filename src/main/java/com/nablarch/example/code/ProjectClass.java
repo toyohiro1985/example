@@ -20,12 +20,14 @@ public enum ProjectClass implements CodeEnum {
     D("d", "D");
 
     /** プロジェクト分類のラベル */
-    private String label;
+    private final String label;
+
     /** プロジェクト分類のコード */
-    private String code;
+    private final String code;
 
     /**
      * コンストラクタ。
+     *
      * @param code コード値
      * @param label ラベル
      */

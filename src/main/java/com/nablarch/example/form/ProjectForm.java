@@ -79,7 +79,7 @@ public class ProjectForm implements Serializable {
      * @return プロジェクト名
      */
     public String getProjectName() {
-        return this.projectName;
+        return projectName;
     }
 
     /**
@@ -88,7 +88,7 @@ public class ProjectForm implements Serializable {
      * @return プロジェクト種別
      */
     public String getProjectType() {
-        return this.projectType;
+        return projectType;
     }
 
     /**
@@ -97,7 +97,7 @@ public class ProjectForm implements Serializable {
      * @return プロジェクト分類
      */
     public String getProjectClass() {
-        return this.projectClass;
+        return projectClass;
     }
 
     /**
@@ -106,7 +106,7 @@ public class ProjectForm implements Serializable {
      * @return プロジェクトマネージャー名
      */
     public String getProjectManager() {
-        return this.projectManager;
+        return projectManager;
     }
 
     /**
@@ -115,7 +115,7 @@ public class ProjectForm implements Serializable {
      * @return プロジェクトリーダー名
      */
     public String getProjectLeader() {
-        return this.projectLeader;
+        return projectLeader;
     }
 
     /**
@@ -124,7 +124,7 @@ public class ProjectForm implements Serializable {
      * @return 顧客ID
      */
     public String getClientId() {
-        return this.clientId;
+        return clientId;
     }
 
     /**
@@ -149,7 +149,7 @@ public class ProjectForm implements Serializable {
      * @return 備考
      */
     public String getNote() {
-        return this.note;
+        return note;
     }
 
     /**
@@ -249,7 +249,7 @@ public class ProjectForm implements Serializable {
      * @param projectStartDate プロジェクト開始日
      */
     public void setProjectStartDate(String projectStartDate) {
-        this.projectStartDate = StringUtil.isNullOrEmpty(projectStartDate) ? null : projectStartDate.replace("/", "");
+        this.projectStartDate = new DateValue(projectStartDate).toStringFormat();
     }
 
     /**
@@ -258,7 +258,7 @@ public class ProjectForm implements Serializable {
      * @param projectEndDate プロジェクト終了日
      */
     public void setProjectEndDate(String projectEndDate) {
-        this.projectEndDate = StringUtil.isNullOrEmpty(projectEndDate) ? null : projectEndDate.replace("/", "");
+        this.projectEndDate = new DateValue(projectEndDate).toStringFormat();
     }
 
 

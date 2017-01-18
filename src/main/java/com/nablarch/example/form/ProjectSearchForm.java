@@ -26,7 +26,7 @@ public class ProjectSearchForm implements Serializable {
      * @return 顧客ID
      */
     public String getClientId() {
-        return this.clientId;
+        return clientId;
     }
 
     /**
@@ -42,7 +42,7 @@ public class ProjectSearchForm implements Serializable {
      * @return プロジェクト名
      */
     public String getProjectName() {
-        return this.projectName;
+        return projectName;
     }
 
     /**
