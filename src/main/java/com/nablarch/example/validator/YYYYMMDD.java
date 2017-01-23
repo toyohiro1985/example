@@ -5,12 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
 import javax.validation.Payload;
-
-import nablarch.core.util.DateUtil;
-import nablarch.core.util.StringUtil;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.CONSTRUCTOR;
@@ -18,8 +13,6 @@ import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
-import com.nablarch.example.validator.YYYYMMDD.YYYYMMDDValidator;
 
 /**
  * 許容する年月日フォーマットを指定するアノテーション。
@@ -65,7 +58,6 @@ public @interface YYYYMMDD {
      *
      * @author Nabu Rakutaro
      */
-    @SuppressWarnings("PublicInnerClass")
     @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
     @Retention(RUNTIME)
     @Documented
@@ -75,37 +67,6 @@ public @interface YYYYMMDD {
          * @return {@link YYYYMMDD}の配列
          */
         YYYYMMDD[] value();
-    }
-
-    /**
-     * YYYYMMDDの検証を行う実装クラス。
-     *
-     * @author Nabu Rakutaro
-     */
-    @SuppressWarnings("PublicInnerClass")
-    class YYYYMMDDValidator implements ConstraintValidator<YYYYMMDD, String> {
-
-        /**
-         * 許容する年月日のフォーマット
-         */
-        private String allowFormat;
-
-        @Override
-        public void initialize(YYYYMMDD constraintAnnotation) {
-            allowFormat = constraintAnnotation.allowFormat();
-        }
-
-        @Override
-        public boolean isValid(String value, ConstraintValidatorContext context) {
-            if (StringUtil.isNullOrEmpty(value)) {
-                return true;
-            }
-            try {
-                return DateUtil.getParsedDate(value, allowFormat) != null;
-            } catch (IllegalArgumentException ignored) {
-                return false;
-            }
-        }
     }
 
 }

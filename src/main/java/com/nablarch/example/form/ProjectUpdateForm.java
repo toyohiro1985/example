@@ -271,7 +271,7 @@ public class ProjectUpdateForm implements Serializable {
      * @param projectStartDate プロジェクト開始日
      */
     public void setProjectStartDate(String projectStartDate) {
-        this.projectStartDate = new DateValue(projectStartDate).toStringFormat();
+        this.projectStartDate = projectStartDate;
     }
 
     /**
@@ -280,7 +280,7 @@ public class ProjectUpdateForm implements Serializable {
      * @param projectEndDate プロジェクト終了日
      */
     public void setProjectEndDate(String projectEndDate) {
-        this.projectEndDate = new DateValue(projectEndDate).toStringFormat();
+        this.projectEndDate = projectStartDate;
     }
 
 

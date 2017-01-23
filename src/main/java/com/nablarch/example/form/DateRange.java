@@ -1,6 +1,9 @@
 package com.nablarch.example.form;
 
-import java.util.Optional;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+import nablarch.core.util.StringUtil;
 
 /**
  * 日付の期間を表すクラス。
@@ -10,10 +13,10 @@ import java.util.Optional;
 public class DateRange {
 
     /** 開始 */
-    private final DateValue start;
+    private final LocalDate start;
 
     /** 終了 */
-    private final DateValue end;
+    private final LocalDate end;
 
     /**
      * 開始と終了を元に日付の期間を生成する。
@@ -22,8 +25,22 @@ public class DateRange {
      * @param end 終了日付
      */
     public DateRange(final String start, final String end) {
-        this.start = new DateValue(start);
-        this.end = new DateValue(end);
+        this.start = toDate(start);
+        this.end = toDate(end);
+    }
+
+    /**
+     * 文字列で表現された日付を{@link LocalDate}に変換する。
+     *
+     * @param date 日付文字列
+     * @return 変換した値
+     */
+    private static LocalDate toDate(final String date) {
+        if (StringUtil.isNullOrEmpty(date)) {
+            return null;
+        } else {
+            return LocalDate.parse(date, DateTimeFormatter.BASIC_ISO_DATE);
+        }
     }
 
     /**
@@ -34,11 +51,11 @@ public class DateRange {
      *
      * @return 有効な期間の場合は{@code true}
      */
-    @SuppressWarnings("WeakerAccess")
     public boolean isValid() {
-        return start.getValue()
-                    .flatMap(date -> end.getValue()
-                                        .flatMap(e -> Optional.of(date.isBefore(e))))
-                    .orElse(true);
+        if (start == null || end == null) {
+            return true;
+        }
+        return start.isBefore(end);
+
     }
 }
