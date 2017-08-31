@@ -1,5 +1,10 @@
 nablarch-example-rest
 ===============
+
+| master | develop |
+|:-----------|:------------|
+|[![Build Status](https://travis-ci.org/nablarch/nablarch-example-rest.svg?branch=master)](https://travis-ci.org/nablarch/nablarch-example-rest)|[![Build Status](https://travis-ci.org/nablarch/nablarch-example-rest.svg?branch=develop)](https://travis-ci.org/nablarch/nablarch-example-rest)|
+
 Nablarchを使ったRESTfulウェブサービスのExampleです。
 
 ## 実行手順
