@@ -1,6 +1,7 @@
 package com.nablarch.example.client;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.ws.rs.client.ClientBuilder;
@@ -27,8 +28,7 @@ public class ProjectClient {
         // 全件検索
         System.out.print(makeDataString(getProjects()));
         // 指定条件検索
-        String searchParam = "?clientId=1";
-        System.out.print(makeDataString(getProjects(searchParam)));
+        System.out.print(makeDataString(getProjects("clientid", 1)));
 
         // 登録
         ProjectForm project = createInsertProject();
@@ -36,8 +36,7 @@ public class ProjectClient {
         System.out.print(makeDataString(getProjects()));
 
         // 更新対象プロジェクト取得
-        String updateSearchParam = "?projectName=プロジェクト９９９";
-        Project updateProject = getProjects(updateSearchParam).get(0);
+        Project updateProject = getProjects("projectName", "プロジェクト９９９").get(0);
         ProjectUpdateForm updateForm = setUpdateProject(updateProject);
 
         // 更新
@@ -104,15 +103,17 @@ public class ProjectClient {
 
     /**
      * HTTP GETメソッドを使用したクライアント操作を行う。
-     * @param param 検索条件パラメータ
+     * @param key query paramのキー
+     * @param value query paramの値
      * @return プロジェクト情報リスト
      */
-    private static List<Project> getProjects(String param) throws UnsupportedEncodingException {
+    private static List<Project> getProjects(String key, Object value) throws UnsupportedEncodingException {
 
         return ClientBuilder.newClient()
-                .target(targetUrl + param)
-                .request(MediaType.APPLICATION_JSON)
-                .get(new GenericType<List<Project>>() {});
+                            .target(targetUrl)
+                            .queryParam(key, value)
+                            .request(MediaType.APPLICATION_JSON)
+                            .get(new GenericType<List<Project>>() {});
     }
 
     /**
