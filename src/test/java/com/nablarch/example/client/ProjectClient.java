@@ -28,7 +28,7 @@ public class ProjectClient {
         // 全件検索
         System.out.print(makeDataString(getProjects()));
         // 指定条件検索
-        System.out.print(makeDataString(getProjects("clientid", 1)));
+        System.out.print(makeDataString(getProjects("clientId", 1)));
 
         // 登録
         ProjectForm project = createInsertProject();
