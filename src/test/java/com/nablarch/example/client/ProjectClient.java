@@ -1,14 +1,18 @@
 package com.nablarch.example.client;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
+import nablarch.core.beans.BeanUtil;
+import nablarch.core.beans.CopyOptions;
+
+import com.nablarch.example.dto.ProjectResponseDto;
 import com.nablarch.example.form.ProjectForm;
 import com.nablarch.example.form.ProjectUpdateForm;
 
@@ -26,22 +30,28 @@ public class ProjectClient {
 
         // 検索
         // 全件検索
-        System.out.print(makeDataString(getProjects()));
+        System.out.print(getProjects());
         // 指定条件検索
-        System.out.print(makeDataString(getProjects("clientId", 1)));
+        System.out.print(getProjects("clientId", 1));
 
         // 登録
         ProjectForm project = createInsertProject();
         System.out.println("insert status:" + postProject(project));
-        System.out.print(makeDataString(getProjects()));
+        System.out.println(getProjects());
 
         // 更新対象プロジェクト取得
-        Project updateProject = getProjects("projectName", "プロジェクト９９９").get(0);
+        Map<String, String> updateTargetProject = getProjects("projectName", "プロジェクト９９９").get(0);
+        final CopyOptions copyOptions = CopyOptions.options()
+                                                   .datePatternByName("projectStartDate", "yyyy/MM/dd")
+                                                   .datePatternByName("projectEndDate", "yyyy/MM/dd")
+                                                   .build();
+
+        Project updateProject = BeanUtil.createAndCopy(Project.class, updateTargetProject, copyOptions);
         ProjectUpdateForm updateForm = setUpdateProject(updateProject);
 
         // 更新
         System.out.println("update status:" + putProject(updateForm, updateProject.getProjectId()));
-        System.out.print(makeDataString(getProjects()));
+        System.out.println(getProjects());
     }
 
     /**
@@ -94,11 +104,11 @@ public class ProjectClient {
      * HTTP GETメソッドを使用したクライアント操作を行う。
      * @return プロジェクト情報リスト
      */
-    private static List<Project> getProjects() {
+    private static List<Map<String, String>> getProjects() {
         return ClientBuilder.newClient()
                 .target(targetUrl)
                 .request(MediaType.APPLICATION_JSON)
-                .get(new GenericType<List<Project>>() {});
+                .get(new GenericType<List<Map<String, String>>>() {});
     }
 
     /**
@@ -107,13 +117,13 @@ public class ProjectClient {
      * @param value query paramの値
      * @return プロジェクト情報リスト
      */
-    private static List<Project> getProjects(String key, Object value) throws UnsupportedEncodingException {
+    private static List<Map<String, String>> getProjects(String key, Object value) throws UnsupportedEncodingException {
 
         return ClientBuilder.newClient()
                             .target(targetUrl)
                             .queryParam(key, value)
                             .request(MediaType.APPLICATION_JSON)
-                            .get(new GenericType<List<Project>>() {});
+                            .get(new GenericType<List<Map<String, String>>>() {});
     }
 
     /**
@@ -146,10 +156,10 @@ public class ProjectClient {
      * @param projects プロジェクト情報List
      * @return プロジェクト情報
      */
-    private static String makeDataString(List<Project> projects) {
+    private static String makeDataString(List<ProjectResponseDto> projects) {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("---- projects (size: %s) ----", projects.size())).append('\n');
-        for (Project project : projects) {
+        for (ProjectResponseDto project : projects) {
             sb.append(String.format("Project(ProjectId: %s, ProjectName: %s, ProjectType: %s, ProjectClass: %s, "
                     + "ProjectStartDate: %s, ProjectEndDate: %s, ClientId: %s, ProjectManager: %s, ProjectLeader: %s, "
                     + "UserId: %s, Note: %s, Sales: %s, CostOfGoodsSold: %s, Sga: %s, AllocationOfCorpExpenses: %s, "

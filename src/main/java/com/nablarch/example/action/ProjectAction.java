@@ -1,23 +1,26 @@
 package com.nablarch.example.action;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.nablarch.example.form.ProjectUpdateForm;
+import nablarch.common.dao.EntityList;
 import nablarch.common.dao.UniversalDao;
 import nablarch.core.beans.BeanUtil;
 import nablarch.core.validation.ee.ValidatorUtil;
 import nablarch.fw.web.HttpRequest;
 import nablarch.fw.web.HttpResponse;
 
+import com.nablarch.example.dto.ProjectResponseDto;
 import com.nablarch.example.dto.ProjectSearchDto;
 import com.nablarch.example.entity.Project;
 import com.nablarch.example.form.ProjectForm;
 import com.nablarch.example.form.ProjectSearchForm;
-
-import java.util.List;
+import com.nablarch.example.form.ProjectUpdateForm;
 
 /**
  * プロジェクト検索・登録・更新機能。
@@ -33,7 +36,7 @@ public class ProjectAction {
      * @return プロジェクト情報リスト
      */
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Project> find(HttpRequest req) {
+    public List<ProjectResponseDto> find(HttpRequest req) {
 
         // リクエストパラメータをBeanに変換
         ProjectSearchForm form = BeanUtil.createAndCopy(ProjectSearchForm.class, req.getParamMap());
@@ -42,7 +45,11 @@ public class ProjectAction {
         ValidatorUtil.validate(form);
 
         ProjectSearchDto searchCondition = BeanUtil.createAndCopy(ProjectSearchDto.class, form);
-        return UniversalDao.findAllBySqlFile(Project.class, "FIND_PROJECT", searchCondition);
+        EntityList<Project> projectList = UniversalDao.findAllBySqlFile(Project.class, "FIND_PROJECT", searchCondition);
+
+        return projectList.stream()
+                          .map(project -> BeanUtil.createAndCopy(ProjectResponseDto.class, project))
+                          .collect(Collectors.toList());
     }
 
     /**
