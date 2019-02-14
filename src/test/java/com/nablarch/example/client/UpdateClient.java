@@ -27,7 +27,7 @@ public class UpdateClient {
     public static void main(String[] args) throws Exception {
 
         // 更新対象プロジェクト取得
-        Map<String, String> updateTargetProject = getProjects("projectName", "プロジェクト９９９").get(0);
+        Map<String, String> updateTargetProject = getProjects("projectId", "1").get(0);
         final CopyOptions copyOptions = CopyOptions.options()
                                                    .datePatternByName("projectStartDate", "yyyy/MM/dd")
                                                    .datePatternByName("projectEndDate", "yyyy/MM/dd")
@@ -50,19 +50,19 @@ public class UpdateClient {
     private static ProjectUpdateForm setUpdateProject(Project project) {
         ProjectUpdateForm form = new ProjectUpdateForm();
         form.setProjectId(project.getProjectId().toString());
-        form.setProjectName("プロジェクト８８８");
+        form.setProjectName("プロジェクト９９９");
         form.setProjectType("development");
-        form.setProjectClass("a");
-        form.setProjectStartDate("20150101");
-        form.setProjectEndDate("20150331");
-        form.setClientId("1");
-        form.setProjectManager("佐藤");
-        form.setProjectLeader("鈴木");
-        form.setNote("備考８８８");
-        form.setSales("20000");
-        form.setCostOfGoodsSold("2000");
-        form.setSga("3000");
-        form.setAllocationOfCorpExpenses("4000");
+        form.setProjectClass("ss");
+        form.setProjectStartDate("20160101");
+        form.setProjectEndDate("20161231");
+        form.setClientId("10");
+        form.setProjectManager("山田");
+        form.setProjectLeader("田中");
+        form.setNote("備考９９９");
+        form.setSales("10000");
+        form.setCostOfGoodsSold("20000");
+        form.setSga("30000");
+        form.setAllocationOfCorpExpenses("40000");
         return form;
     }
 
