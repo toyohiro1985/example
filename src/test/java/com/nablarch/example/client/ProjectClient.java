@@ -9,14 +9,13 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
-import nablarch.core.beans.BeanUtil;
-import nablarch.core.beans.CopyOptions;
-
 import com.nablarch.example.dto.ProjectResponseDto;
+import com.nablarch.example.entity.Project;
 import com.nablarch.example.form.ProjectForm;
 import com.nablarch.example.form.ProjectUpdateForm;
 
-import com.nablarch.example.entity.Project;
+import nablarch.core.beans.BeanUtil;
+import nablarch.core.beans.CopyOptions;
 
 public class ProjectClient {
 
